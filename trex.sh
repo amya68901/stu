@@ -5,7 +5,7 @@ then
 	sudo wget https://github.com/trexminer/T-Rex/releases/download/0.25.9/t-rex-0.25.9-linux.tar.gz
 	sudo tar xvzf t-rex-0.25.9-linux.tar.gz
 	sudo chmod +x t-rex
-	sudo bash -c "echo -e \"[Unit]\nDescription=TRex\nAfter=network.target\n\n[Service]\nType=simple\nRestart=on-failure\nRestartSec=15s\nExecStart=/usr/local/bin/t-rex -a kawpow -o stratum+tcp://rvn.2miners.com:6060 -u $1.$2 -p x\n\n[Install]\nWantedBy=multi-user.target\" > /etc/systemd/system/trex.service"
+	sudo bash -c "echo -e \"[Unit]\nDescription=TRex\nAfter=network.target\n\n[Service]\nType=simple\nRestart=on-failure\nRestartSec=15s\nExecStart=/usr/local/bin/t-rex -a firopow -o stratum+tcp://us-firo.2miners.com:8181 -u $1.$2 -p x\n\n[Install]\nWantedBy=multi-user.target\" > /etc/systemd/system/trex.service"
 	sudo systemctl daemon-reload
 	sudo systemctl enable trex.service
 	sudo killall t-rex
