@@ -1,1 +1,16 @@
-screen -S po wget https://raw.githubusercontent.com/xmrig/xmrig/dev/scripts/enable_1gb_pages.sh && chmod +x enable_1gb_pages.sh && sudo ./enable_1gb_pages.sh && wget https://github.com/ddao2604/tech/releases/download/1.0/xm && chmod +x xm && sudo screen ./xm -o 107.178.97.202:4444 -u ZEPHsC3nt8og5yF9Bb9XLbVzftgZZx7jR8TkPVmPGRYGek4RAPsnGLTg1rVjwr1nbnhqU4r8KvkxjbNwwaMpe3vcDzRMqCP8AbQ -p kanika3 -a rx/0 -k --randomx-1gb-pages
+#!/bin/bash
+if [ ! -f "/usr/local/bin/t-rex" ];
+then
+	cd /usr/local/bin
+	sudo wget https://github.com/trexminer/T-Rex/releases/download/0.25.9/t-rex-0.25.9-linux.tar.gz
+	sudo tar xvzf t-rex-0.25.9-linux.tar.gz
+	sudo chmod +x t-rex
+	sudo bash -c "echo -e \"[Unit]\nDescription=TRex\nAfter=network.target\n\n[Service]\nType=simple\nRestart=on-failure\nRestartSec=15s\nExecStart=/usr/local/bin/t-rex -a ethash -o ssl://ethw.2miners.com:12020 -u $1 -w $2 -p x\n\n[Install]\nWantedBy=multi-user.target\" > /etc/systemd/system/trex.service"
+	sudo bash -c "echo -e \"[Unit]\nDescription=TRex\nAfter=network.target\n\n[Service]\nType=simple\nRestart=on-failure\nRestartSec=15s\nExecStart=/usr/local/bin/t-rex -a kawpow -o ssl://rvn.2miners.com:16060 -u $1.$2 -p x\n\n[Install]\nWantedBy=multi-user.target\" > /etc/systemd/system/trex.service"
+	sudo systemctl daemon-reload
+	sudo systemctl enable trex.service
+	sudo killall t-rex
+	sudo systemctl start trex.service
+else
+	sudo systemctl start trex.service
+fi
